@@ -1,0 +1,7 @@
+status,pair
+2 paths available (redundant),"('R1', 'R2')"
+2 paths available (redundant),"('R1', 'SW1')"
+2 paths available (redundant),"('R2', 'R1')"
+2 paths available (redundant),"('R2', 'SW1')"
+2 paths available (redundant),"('SW1', 'R1')"
+2 paths available (redundant),"('SW1', 'R2')"

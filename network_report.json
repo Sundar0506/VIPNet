@@ -1,0 +1,95 @@
+{
+    "validation": [
+        "R2:GigabitEthernet0/0 MTU below standard"
+    ],
+    "performance": {
+        "connected": true,
+        "bottlenecks": [
+            [
+                "R1",
+                "R2",
+                "MTU mismatch"
+            ]
+        ],
+        "redundancy": {
+            "('R1', 'R2')": "2 paths available (redundant)",
+            "('R1', 'SW1')": "2 paths available (redundant)",
+            "('R2', 'R1')": "2 paths available (redundant)",
+            "('R2', 'SW1')": "2 paths available (redundant)",
+            "('SW1', 'R1')": "2 paths available (redundant)",
+            "('SW1', 'R2')": "2 paths available (redundant)"
+        }
+    },
+    "simulation": {
+        "traffic_R1_R2": {
+            "src": "R1",
+            "dst": "R2",
+            "path": [
+                "R1",
+                "R2"
+            ]
+        },
+        "vlan_reachability": {
+            "20": [
+                "SW1",
+                "R1",
+                "R2"
+            ],
+            "10": [
+                "SW1",
+                "R2"
+            ]
+        }
+    },
+    "failure_simulation": {
+        "failed_link": [
+            "R1",
+            "R2"
+        ],
+        "src": "R1",
+        "dst": "R2",
+        "status": "Traffic still possible (rerouted)",
+        "new_path": [
+            "R1",
+            "SW1",
+            "R2"
+        ]
+    },
+    "vlan_failure_simulation": {
+        "failed_vlan": 10,
+        "removed_from": [
+            "R1",
+            "SW1"
+        ],
+        "new_vlan_reachability": {
+            "20": [
+                "SW1",
+                "R1",
+                "R2"
+            ],
+            "10": [
+                "SW1",
+                "R2"
+            ]
+        }
+    },
+    "bandwidth_utilization": {
+        "('R1', 'R2')": {
+            "actual_kbps": 1000000,
+            "max_kbps": 1000000,
+            "util_percent": 100.0
+        }
+    },
+    "route_convergence": {
+        "OSPF": {
+            "R1": 50,
+            "R2": 55,
+            "SW1": 60
+        },
+        "BGP": {
+            "R1": 200,
+            "R2": 220,
+            "SW1": 240
+        }
+    }
+}

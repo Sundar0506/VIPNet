@@ -1,0 +1,2 @@
+failed_link,dst,src,status,new_path
+"('R1', 'R2')",R2,R1,Traffic still possible (rerouted),R1 -> SW1 -> R2
