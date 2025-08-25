@@ -1,148 +1,144 @@
-# VIPNet - Virtual IP Network Simulator
+VIPNet – Virtual Intelligent Packet Network
+1. Overview
 
-VIPNet is a Python-based network simulation and analysis tool that allows you to model, validate, and simulate network topologies with routers and switches. It provides interactive visualizations, performance analysis, and live CLI-based simulations for traffic, VLANs, link failures, and routing protocol convergence.
+VIPNet is a network simulation and analysis tool built in Python that allows users to:
 
----
+Parse network device configurations (routers and switches).
 
-## Features
+Automatically build a network topology.
 
-- Parse router and switch configurations from text files
-- Automatically build network topology as a graph
-- Validate configurations (MTU, IP addresses, bandwidth)
-- Analyze network performance:
-  - Connectivity check
-  - Bottleneck detection
-  - Redundancy and fault tolerance
-- Simulate network operations:
-  - Traffic simulation between devices
-  - VLAN reachability
-  - Link failure simulation
-  - VLAN failure simulation
-- Advanced simulations:
-  - Bandwidth utilization
-  - OSPF/BGP route convergence
-- Interactive visualizations:
-  - Static topology with Matplotlib
-  - Interactive HTML topology with PyVis
-- Export reports:
-  - JSON
-  - CSV
-  - Excel
-- Live CLI mode to interactively run simulations and view network statistics
+Analyze network performance, connectivity, and redundancy.
 
----
+Validate device configurations for issues like MTU mismatch or low bandwidth.
 
-## Installation
+Simulate traffic flows, link failures, and VLAN failures.
 
-1. Clone this repository:
+Perform advanced simulations like bandwidth utilization and OSPF/BGP route convergence.
 
-```bash
-git clone https://github.com/yourusername/vipnet.git
-cd vipnet
-Install dependencies:
+Visualize the network interactively using Matplotlib and PyVis.
 
-bash
-Copy
-Edit
-pip install -r requirements.txt
-Usage
-Prepare configuration files for your devices (routers and switches) under the configs/ folder, e.g.:
+Export reports in JSON, CSV, and Excel formats.
 
-Copy
-Edit
-configs/R1.txt
-configs/R2.txt
-configs/SW1.txt
-Run the main script:
+Provide a Live CLI mode for interactive testing and simulations.
 
-bash
-Copy
-Edit
-python main.py
-The script will:
+2. Key Features
 
-Display a summary of nodes and edges
+Topology Builder
 
-Generate a Matplotlib static topology image: reports/network_topology.png
+Automatically constructs a graph of devices and links using NetworkX.
 
-Generate an interactive HTML topology: reports/network_topology.html
+Differentiates between Layer 2 (L2) and Layer 3 (L3) connections.
 
-Validate configurations and show errors
+Configuration Validation
 
-Perform performance analysis
+Checks interfaces for IP configuration issues.
 
-Run simulations (traffic, VLAN reachability, failures)
+Detects MTU mismatches and bandwidth limitations.
 
-Export reports to JSON, CSV, and Excel
+Performance Analysis
 
-Launch a live CLI mode for interactive commands
+Connectivity check: whether the network is fully connected.
 
-Live CLI Commands
-pgsql
-Copy
-Edit
-simulate <src> <dst>       - Simulate traffic from src to dst
-vlan_reach                 - Show VLAN reachability
-fail <src> <dst>           - Simulate link failure between src and dst
-vlan_fail <vlan> <dev1> <dev2> - Simulate VLAN failure
-bw_util                    - Show bandwidth utilization
-ospf_conv                  - Simulate OSPF convergence
-bgp_conv                   - Simulate BGP convergence
-exit / quit                - Exit CLI mode
-help                       - Show available commands
-Report Files
-All generated reports are saved under the reports/ folder:
+Bottleneck detection: identifies links with MTU or bandwidth issues.
 
-network_topology.png → Static Matplotlib topology
+Redundancy analysis: checks if multiple paths exist between nodes.
 
-network_topology.html → Interactive PyVis topology
+Simulations
 
-network_report.json → Complete report in JSON
+Traffic simulation between any two nodes.
 
-network_report.xlsx → Excel report
+VLAN reachability for Layer 2 networks.
 
-CSV files for each module (validation, performance, simulations)
+Link failure simulation with rerouting analysis.
 
-Requirements
-Python 3.11+ with the following packages (see requirements.txt):
+VLAN failure simulation to see impact on network connectivity.
 
-nginx
-Copy
-Edit
-networkx
-matplotlib
-pyvis
-tabulate
-pandas
-openpyxl
-Example Output
-CLI Simulation:
+Advanced metrics: bandwidth utilization and OSPF/BGP convergence times.
 
-ruby
-Copy
-Edit
->> vlan_reach
-╒════════╤═════════════════════════╕
-│ VLAN ID│ Reachable Nodes         │
-╞════════╪═════════════════════════╡
-│ 10     │ R1, SW1, R2            │
-│ 20     │ R1, SW1, R2            │
-╘════════╧═════════════════════════╛
-JSON Report:
+Visualization
 
-json
-Copy
-Edit
-{
-    "validation": ["R2:GigabitEthernet0/0 MTU below standard"],
-    "performance": {
-        "connected": true,
-        "bottlenecks": [["R1", "R2", "MTU mismatch"]],
-        ...
-    }
-}
-License
-MIT License
+Matplotlib for static network topology diagrams.
 
-Author
-Sundara Mahalingam M
+PyVis for interactive HTML visualizations with clickable nodes and links.
+
+Report Generation
+
+Exports validation, performance, simulation, and convergence data.
+
+Supports JSON, CSV, and Excel formats.
+
+Live CLI Mode
+
+Users can type commands interactively to test traffic, simulate failures, and view reports.
+
+Commands include:
+
+simulate <src> <dst>
+vlan_reach
+fail <src> <dst>
+vlan_fail <vlan> <dev1> <dev2>
+bw_util
+ospf_conv
+bgp_conv
+
+3. Technologies Used
+
+Python 3.x
+
+NetworkX – for network graph creation and path analysis.
+
+Matplotlib – for static network visualization.
+
+PyVis – for interactive HTML network visualization.
+
+Tabulate & pprint – for CLI-friendly tabular output.
+
+JSON, CSV, Excel (openpyxl/pandas) – for exporting reports.
+
+4. Project Structure
+vipnet/
+├── configs/                # Device configuration files (R1.txt, R2.txt, SW1.txt)
+├── core/
+│   ├── parser.py           # Parses device configs
+│   ├── topo.py             # Builds network topology
+│   ├── validate.py         # Configuration validation functions
+│   ├── perf.py             # Performance analysis functions
+│   ├── simulate.py         # Simulation functions
+│   ├── export.py           # Export functions (CSV, Excel)
+├── reports/                # Generated reports and topology visualizations
+├── main.py                 # Main script to run the project
+├── README.md               # Project explanation
+└── requirements.txt        # Python dependencies
+
+5. Sample Output
+
+Validation Report:
+
+['R2:GigabitEthernet0/0 MTU below standard']
+
+
+Performance Report:
+
+{'connected': True, 'bottlenecks': [('R1', 'R2', 'MTU mismatch')], 'redundancy': {...}}
+
+
+VLAN Reachability:
+
+{10: ['SW1', 'R1', 'R2'], 20: ['SW1', 'R1', 'R2']}
+
+
+Bandwidth Utilization Table (CLI):
+
+╒════════╤═════════════════╤══════════════╤═══════════════╕
+│ Link   │   Actual (Kbps) │   Max (Kbps) │ Utilization   │
+╞════════╪═════════════════╪══════════════╪═══════════════╡
+│ R1-R2  │         1000000 │      1000000 │ 100.0%        │
+╘════════╧═════════════════╧══════════════╧═══════════════╛
+
+6. Use Cases
+
+Network engineers can validate configurations before deployment.
+
+Students can learn network topologies, traffic flow, and redundancy.
+
+IT teams can simulate link or VLAN failures and see impact on connectivity.
